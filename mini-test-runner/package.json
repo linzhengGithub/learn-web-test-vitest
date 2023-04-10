@@ -13,5 +13,8 @@
   "dependencies": {
     "esbuild": "^0.17.15",
     "glob": "^9.3.4"
+  },
+  "devDependencies": {
+    "vitest": "^0.30.0"
   }
 }
