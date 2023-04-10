@@ -1,3 +1,4 @@
+import { deepEqual } from './utils.js';
 // test it
 // expect toBe
 // test.only
@@ -30,8 +31,15 @@ export function expect(actual) {
       } else {
         throw new Error(`fail actual:${actual} expected:${expected}`)
       }
-    }
+    },
     // TODO toEqual
+    toEqual(expected) {
+      try {
+        deepEqual(actual, expected)
+      } catch (error) {
+        console.error(`error: ${ error.message }`);
+      }
+    }
   }
 }
 
@@ -85,4 +93,5 @@ export function run() {
     afterAllCallback()
   }
 }
+
 

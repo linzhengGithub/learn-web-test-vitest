@@ -18,7 +18,8 @@ afterEach(() => {
 
 test('first test', () => {
   console.log('first test');
-  expect(2).toBe(3)
+  expect(2).toBe(2)
+  expect({name: 'lin'}).toEqual({name: 'zheng'})
 })
 
 // test.only('test only', () => {
