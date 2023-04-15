@@ -1,3 +1,4 @@
+import { innerHeightFn } from './indirectFn';
 import { getUserAge, api_getUserAge, User } from './user';
 import axios from 'axios';
 
@@ -35,4 +36,23 @@ export async function getUserAge_axios() {
 export async function getUserAge_axiosGet() {
   const user: UserType = await axios.get('./user-api')
   return user.age
+}
+
+// node env
+export function nodesEnvDoubleAge() {
+  return Number(process.env.NODE_USER_AGE) * 2
+}
+
+// vite env
+export function vitesEnvDoubleAge() {
+  return Number(import.meta.env.VITE_USER_AGE) * 2
+}
+
+// global
+export function globalDoubleAge(){
+  return linz.age * 2
+}
+
+export function doubleInnerHeight() {
+  return innerHeightFn() * 2
 }
