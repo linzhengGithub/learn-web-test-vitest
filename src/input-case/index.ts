@@ -49,7 +49,7 @@ export function vitesEnvDoubleAge() {
 }
 
 // global
-export function globalDoubleAge(){
+export function globalDoubleAge() {
   return linz.age * 2
 }
 
