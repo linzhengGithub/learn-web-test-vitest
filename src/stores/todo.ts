@@ -1,31 +1,48 @@
 import { defineStore } from 'pinia';
-import { fetchAddTodo } from '../api/todo_api';
+import { fetchAddTodo, fetchRemoveTodo, fetchTodoList } from '../api/todo_api';
+import { ref } from 'vue';
 
-interface TodoState{
-  todos: Todo[]
-}
-
-interface Todo{
+interface Todo {
   id: number,
   title: string
 }
 
-export const useTodoStore = defineStore({
-  id: 'todo_list_store',
-  state: ():TodoState => ({
-    todos: []
-  }),
-  getters: {},
-  actions: {
-    createTodoItem(id, title) {
-      return { id, title }
-    },
-    async addTodo(title: string) {
-      const { data } = await fetchAddTodo(title)
-      const todo = this.createTodoItem(data.todo.id, data.todo.title)
-      this.todos.push(todo)
-      return todo
-    },
-    removeTodo() { }
+export const useTodoStore = defineStore('todo_list_store', () => {
+  const todos = ref<Todo[]>([])
+
+  const createTodoItem = (id: number, title: string) => {
+    return { id, title }
+  }
+
+  const addTodo = async (title: string) => {
+    const { data } = await fetchAddTodo(title)
+    const todo = createTodoItem(data.todo.id, data.todo.title)
+    todos.value.push(todo)
+    return todo
+  }
+
+  const removeTodo = async (id: number) => {
+    const { data } = await fetchRemoveTodo(id)
+    const todoItem = findTodo(data.id)
+    if (todoItem) {
+      todos.value = todos.value.filter(item => item.id !== todoItem.id)
+    }
+    return todoItem
+  }
+
+  const updateTodos = async () => {
+    const { data } = await fetchTodoList()
+    todos.value  = data.todoList
+  }
+
+  function findTodo(id: number) {
+    return todos.value.filter(item => item.id === id)[0]
+  }
+  return {
+    todos,
+    addTodo,
+    removeTodo,
+    updateTodos
   }
 })
+
