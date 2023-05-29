@@ -13,7 +13,7 @@ export function fetchRemoveTodo(id: number) {
 }
 
 export function fetchTodoList() {
-  return axios.get('/get/todoList').then(({ data }) => {
+  return axios.get('/api/todoList').then(({ data }) => {
     return data
   })
 }
