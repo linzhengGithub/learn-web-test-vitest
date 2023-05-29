@@ -1,21 +1,20 @@
-import axios from 'axios'
 import { createPinia, setActivePinia } from 'pinia'
 import { it, expect, describe, vi } from 'vitest'
 import { useTodoStore } from './todo'
+import { fetchAddTodo, fetchRemoveTodo, fetchTodoList } from '../api/todo_api'
 
 /** 多种API的测试方案 */
-// 直接 mock axios
-// 最不推荐的方式: 暴露axios和实现细节;
+// mock 中间层
 
 // 接口请求测试
-vi.mock('axios')
+vi.mock('../api/todo_api.ts')
 describe('todo test group', () => {
   it('add todo', async () => {
     // 准备数据
     // 直接手写入参以及返回值,就不需要验证入参了
-    vi.mocked(axios.post).mockImplementation((path, { title }: any) => {
+    vi.mocked(fetchAddTodo).mockImplementation((title) => {
       return Promise.resolve({
-        data: { data: { todo: { id: 1, title } } }
+        data: { todo: { id: 1, title } }
       })
     })
     setActivePinia(createPinia())
@@ -32,14 +31,14 @@ describe('todo test group', () => {
   it('remove todo', async () => {
     // 准备数据
     // 因为要调用2次接口,所以要使用mockImplementationOnce函数,对2个接口的入参和返回值进行编写
-    vi.mocked(axios.post).mockImplementationOnce((path, { title }: any) => {
+    vi.mocked(fetchAddTodo).mockImplementationOnce((title) => {
       return Promise.resolve({
-        data: { data: { todo: { id: 1, title } } }
+        data: { todo: { id: 1, title } }
       })
     })
-    vi.mocked(axios.post).mockImplementationOnce((path, { id }: any) => {
+    vi.mocked(fetchRemoveTodo).mockImplementationOnce((id) => {
       return Promise.resolve({
-        data: { data: { id } }
+        data: { id }
       })
     })
     setActivePinia(createPinia())
@@ -57,8 +56,8 @@ describe('todo test group', () => {
   it('update todo', async () => {
     // 准备数据
     const todoList = [{ id: 1, title: '学习测试' }]
-    vi.mocked(axios.get).mockResolvedValue({
-      data: { data: { todoList } }
+    vi.mocked(fetchTodoList).mockResolvedValue({
+      data: { todoList }
     })
     setActivePinia(createPinia())
     const todoStore = useTodoStore()
