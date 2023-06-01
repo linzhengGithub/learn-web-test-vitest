@@ -15,7 +15,7 @@ export const useTodoStore = defineStore('todo_list_store', () => {
   }
 
   const addTodo = async (title: string) => {
-    if(!title) return null
+    if (!title) return null
     const { data } = await fetchAddTodo(title)
     const todo = createTodoItem(data.todo.id, data.todo.title)
     todos.value.push(todo)
@@ -24,7 +24,7 @@ export const useTodoStore = defineStore('todo_list_store', () => {
 
   const removeTodo = async (id: number) => {
     const { data } = await fetchRemoveTodo(id)
-    if(!data) {
+    if (!data) {
       throw new Error('')
     }
     const todoItem = findTodo(data.id)
@@ -36,7 +36,7 @@ export const useTodoStore = defineStore('todo_list_store', () => {
 
   const updateTodos = async () => {
     const { data } = await fetchTodoList()
-    todos.value  = data.todoList
+    todos.value = data.todoList
   }
 
   function findTodo(id: number) {
