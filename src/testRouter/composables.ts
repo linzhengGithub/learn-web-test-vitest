@@ -1,17 +1,22 @@
 import { useRouter } from 'vue-router'
 
+export const enum RouterNames {
+  HOME = 'Home',
+  SETTINGS = 'Settings'
+}
+
 export function useGoto() {
   const router = useRouter()
 
   function gotoHome() {
     router.push({
-      name: 'Home',
+      name: RouterNames.HOME,
     })
   }
 
   function gotoSettings() {
     router.push({
-      name: 'Settings',
+      name: RouterNames.SETTINGS,
     })
   }
 
@@ -19,4 +24,8 @@ export function useGoto() {
     gotoHome,
     gotoSettings,
   }
+}
+
+export function gotoGitHub() {
+  window.open('https://www.github.com')
 }

@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { useSetup } from '../tests/helper';
-import { useGoto } from './composables'
+import { useGoto, gotoGitHub, RouterNames } from './composables'
 
 
 describe('theHeader', () => {
@@ -10,7 +10,7 @@ describe('theHeader', () => {
       gotoHome()
     })
 
-    expect(router.push).toBeCalledWith({ name: 'Home' });
+    expect(router.push).toBeCalledWith({ name: RouterNames.HOME });
   })
   it('should be go to setting page', () => {
     const { router } = useSetup(() => {
@@ -18,6 +18,13 @@ describe('theHeader', () => {
       gotoSettings()
     })
 
-    expect(router.push).toBeCalledWith({ name: 'Settings' });
+    expect(router.push).toBeCalledWith({ name: RouterNames.SETTINGS });
+  })
+  it('should be go to github', () => {
+    window.open = vi.fn()
+
+    gotoGitHub()
+
+    expect(window.open).toBeCalledWith('https://www.github.com')
   })
 })
