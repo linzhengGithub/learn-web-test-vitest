@@ -54,6 +54,8 @@ describe('command trigger modal', () => {
     vi.spyOn(misc, 'useIsMac').mockImplementation(() => computed(() => true))
 
     const { wrapper } = useSetup(() => registerKeyboardShortcut())
+    useSetup(() => registerKeyboardShortcut())
+
     fireEvent.keydown({
       key: 'k',
       metaKey: true
@@ -70,6 +72,8 @@ describe('command trigger modal', () => {
     vi.spyOn(misc, 'useIsMac').mockImplementation(() => computed(() => false))
 
     const { wrapper } = useSetup(() => registerKeyboardShortcut())
+    useSetup(() => registerKeyboardShortcut())
+
     fireEvent.keydown({
       key: 'k',
       ctrlKey: true
