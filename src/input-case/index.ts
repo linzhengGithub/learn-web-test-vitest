@@ -1,4 +1,4 @@
-import { innerHeightFn } from './indirectFn';
+import { innerHeightFn, mock_foo } from './indirectFn';
 import { getUserAge, api_getUserAge, User } from './user';
 import axios from 'axios';
 
@@ -55,4 +55,10 @@ export function globalDoubleAge() {
 
 export function doubleInnerHeight() {
   return innerHeightFn() * 2
+}
+
+// fix - mock
+
+export const mock_bar = () => {
+  return mock_foo() + 'bor'
 }

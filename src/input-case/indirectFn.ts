@@ -3,3 +3,7 @@
 export function innerHeightFn() {
   return innerHeight
 }
+
+export const mock_foo = () => {
+  return 'foo'
+}
